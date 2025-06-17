@@ -2,7 +2,7 @@ import os
 from PIL import Image
 
 def read_bayer_csv_file(file_name):
-    with open(f'Art\\conf\\{file_name}.csv') as f:
+    with open(f'ImageDitheringFilter\\conf\\{file_name}.csv') as f:
         return tuple(
             tuple(
                 map(int, line.split(','))
@@ -10,7 +10,7 @@ def read_bayer_csv_file(file_name):
         )
         
 def read_palette_hex_file(file_name):
-    with open(f'Art\\conf\\{file_name}.hex') as f:
+    with open(f'ImageDitheringFilter\\conf\\{file_name}.hex') as f:
         return tuple(hex_to_rgb(line) for line in f)
 
 def rgb_to_hex(rgb):
@@ -67,8 +67,8 @@ def process_image(oldImage, bayer, palette):
     return newImage
 
 if __name__ == '__main__':
-    os.makedirs('Art\\conf', exist_ok=True)
-    os.makedirs('Art\\Generated Images', exist_ok=True)
+    os.makedirs('ImageDitheringFilter\\conf', exist_ok=True)
+    os.makedirs('ImageDitheringFilter\\Generated Images', exist_ok=True)
     
     sourceFile = 'artworks-JPoVuXDmFWCLhyVS-oysneg-t1080x1080.jpg'
     sourceFileName, sourceFileType = sourceFile.split('.')
@@ -86,12 +86,12 @@ if __name__ == '__main__':
     palette = read_palette_hex_file(paletteFileName)
     
     print(f'Reading Source File: {sourceFile}')
-    image = Image.open(f'Art\\Source Images\\{sourceFile}', mode='r').convert('RGB')
+    image = Image.open(f'ImageDitheringFilter\\Source Images\\{sourceFile}', mode='r').convert('RGB')
     
     print('Processing')
     newImage = process_image(image, bayer, palette)
     
     print(f'Writing Output File: {newFile}')
     
-    newImage.save(f'Art\\Generated Images\\{newFile}')
+    newImage.save(f'ImageDitheringFilter\\Generated Images\\{newFile}')
     newImage.show()
